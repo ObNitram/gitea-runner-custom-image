@@ -7,6 +7,7 @@ Custom Docker image for running the Gitea runner as an unprivileged `gitea-runne
 - Base image: `ubuntu:latest`.
 - System packages are upgraded during the image build with `apt-get upgrade` so the image starts from current Ubuntu packages.
 - Installs `git`, `nodejs`, `npm`, and the highest-versioned `openjdk-*-jdk` package available from the `ubuntu:latest` APT repositories.
+- Keeps package installation, user creation, and runner binary copy in separate Docker layers to improve build cache reuse.
 - Downloads the latest Linux binary published by `gitea/runner` outside `docker build` with `scripts/download-gitea-runner.sh`, then copies it into the image with `COPY`.
 - Automatically selects the pre-downloaded `amd64` or `arm64` binary through BuildKit (`TARGETARCH`).
 - Verifies the SHA-256 checksum provided by the Gitea release before the binary is copied into the image.
