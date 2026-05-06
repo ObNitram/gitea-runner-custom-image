@@ -9,6 +9,11 @@ on:
       - 'v*'
   pull_request:
   workflow_dispatch:
+    inputs:
+      runner_version:
+        description: Gitea runner version to embed, for example v1.0.0. Leave empty for latest.
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -21,6 +26,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Download Gitea runner binaries
+        env:
+          RUNNER_VERSION: ${{ inputs.runner_version || 'latest' }}
+          RUNNER_ARCHITECTURES: amd64 arm64
+        run: ./scripts/download-gitea-runner.sh
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
