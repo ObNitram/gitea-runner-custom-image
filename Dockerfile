@@ -12,7 +12,10 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends ca-certificates; \
+    apt-get upgrade -y; \
+    openjdk_package="$(apt-cache search --names-only '^openjdk-[0-9]+-jdk$' | awk '{print $1}' | sort -t- -k2,2n | tail -n1)"; \
+    test -n "${openjdk_package}"; \
+    apt-get install -y --no-install-recommends ca-certificates git nodejs npm "${openjdk_package}"; \
     groupadd --system --gid 10001 gitea-runner; \
     useradd --system --uid 10001 --gid gitea-runner --home-dir "${GITEA_RUNNER_HOME}" --create-home --shell /usr/sbin/nologin gitea-runner; \
     install -d -o gitea-runner -g gitea-runner -m 0750 "${GITEA_RUNNER_HOME}" "${GITEA_RUNNER_HOME}/data"; \
