@@ -59,7 +59,6 @@ docker run --rm \
 
 ## GitHub Actions
 
-The workflow `.github/workflows/build-image.yml` downloads the `amd64` and `arm64` binaries before the Docker build, then builds the multi-architecture `linux/amd64` and `linux/arm64` image on `ubuntu-latest`.
+The workflow `.github/workflows/build-image.yml` downloads the `amd64` and `arm64` binaries before the Docker build, then builds and always pushes the multi-architecture `linux/amd64` and `linux/arm64` image to GHCR from `ubuntu-latest`.
 
-- Pull requests: build only.
-- Branches and tags: build and push to `ghcr.io/<owner>/gitea-runner-custom`.
+- Pull requests, branches, tags, and manual runs: build and push to `ghcr.io/<owner>/gitea-runner-custom`.
