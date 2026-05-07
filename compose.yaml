@@ -1,0 +1,16 @@
+services:
+  gitea-runner:
+    build: .
+    restart: unless-stopped
+    environment:
+      CONFIG_FILE: /etc/act_runner/config.yaml
+      GITEA_INSTANCE_URL: ${GITEA_INSTANCE_URL}
+      GITEA_RUNNER_REGISTRATION_TOKEN: ${GITEA_RUNNER_REGISTRATION_TOKEN}
+    volumes:
+      - runner-data:/root/data
+      - runner-cache:/root/.cache
+      - ./config.yaml:/etc/act_runner/config.yaml:ro
+
+volumes:
+  runner-data:
+  runner-cache:
