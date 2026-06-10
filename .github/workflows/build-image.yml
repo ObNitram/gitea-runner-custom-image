@@ -6,8 +6,11 @@ on:
       - main
       - master
     tags:
-      - 'v*'
+      - "v*"
+
   pull_request:
+  schedule:
+    - cron: "0 4 * * 1"
   workflow_dispatch:
     inputs:
       runner_version:
